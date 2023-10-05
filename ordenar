@@ -2,7 +2,7 @@ import os
 import shutil
 
 # Ruta de la carpeta de descargas
-ruta_descargas = "C:\\Users\\juann\\Downloads\\"
+ruta_descargas = "Ruta de descargas"
 
 # Función para organizar archivos
 def organizar_descargas():
