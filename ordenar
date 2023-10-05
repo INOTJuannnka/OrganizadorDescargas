@@ -1,0 +1,50 @@
+import os
+import shutil
+
+# Ruta de la carpeta de descargas
+ruta_descargas = "C:\\Users\\juann\\Downloads\\"
+
+# Función para organizar archivos
+def organizar_descargas():
+    for filename in os.listdir(ruta_descargas):
+        archivo = os.path.join(ruta_descargas, filename)
+
+        if os.path.isfile(archivo):
+            # Comprobamos la extensión del archivo
+            ext = filename.split('.')[-1].lower()
+            if ext in ('zip', 'rar', '7z', 'tar', 'gz'):
+                mover_archivo(archivo, 'Comprimidos')
+            elif ext in ('txt', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'):
+                mover_archivo(archivo, 'Archivos de Texto')
+            elif ext in ('mp4', 'mkv', 'avi', 'mov', 'wmv'):
+                mover_archivo(archivo, 'Videos')
+            elif ext in ('jpg', 'jpeg', 'png', 'gif'):
+                mover_archivo(archivo, 'Imágenes')
+            elif os.path.isdir(archivo):
+                mover_carpeta(archivo, 'Carpetas')
+            else:
+                mover_archivo(archivo, 'Otros')
+
+
+# Función para mover archivos
+def mover_archivo(archivo, categoria):
+    destino = os.path.join(ruta_descargas, categoria, os.path.basename(archivo))
+    shutil.move(archivo, destino)
+    print(f"{archivo} movido a {categoria}")
+
+# Función para mover carpetas
+def mover_carpeta(carpeta, categoria):
+    destino = os.path.join(ruta_descargas, categoria, os.path.basename(carpeta))
+    shutil.move(carpeta, destino)
+    print(f"{carpeta} movido a {categoria}")
+
+if __name__ == "__main__":
+    # Crea las carpetas si no existen
+    categorias = ['Comprimidos', 'Archivos de Texto', 'Videos', 'Imágenes', 'Carpetas','Otros']
+    for categoria in categorias:
+        carpeta_categoria = os.path.join(ruta_descargas, categoria)
+        if not os.path.exists(carpeta_categoria):
+            os.makedirs(carpeta_categoria)
+
+    # Organiza las descargas
+    organizar_descargas()
